@@ -97,6 +97,9 @@ public class LoginPage extends JFrame{
 		
 		btnLogin = new JButton("Login");
 		
+		//enter
+		frmLogin.getRootPane().setDefaultButton(btnLogin);
+		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -106,7 +109,7 @@ public class LoginPage extends JFrame{
 					Class.forName("com.mysql.jdbc.Driver");
 
 		            connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-		            ps = connection.prepareStatement("SELECT `user_name`, `password` FROM `user` WHERE `user_name` = ? AND `password` = ?");
+		            ps = connection.prepareStatement("SELECT `professorUserName`, `password` FROM `professor` WHERE `professorUserName` = ? AND `password` = ?");
 		            ps.setString(1, txtUsername.getText());
 		            ps.setString(2, String.valueOf(txtPassword.getPassword()));
 		            ResultSet result = ps.executeQuery();
@@ -144,7 +147,7 @@ public class LoginPage extends JFrame{
 			}
 		}
 							);
-		btnExit.setBounds(135, 287, 89, 23);
+		btnExit.setBounds(221, 253, 89, 23);
 		frmLogin.getContentPane().add(btnExit);
 		
 		JSeparator separator = new JSeparator();
@@ -155,16 +158,7 @@ public class LoginPage extends JFrame{
 		separator_1.setBounds(39, 152, 271, 2);
 		frmLogin.getContentPane().add(separator_1);
 		
-		JButton btnNewButton = new JButton("Reset");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				txtUsername.setText(null);
-				txtPassword.setText(null);
-			}
-		});
-		btnNewButton.setBounds(221, 253, 89, 23);
-		frmLogin.getContentPane().add(btnNewButton);
-		
+				
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(151, 201, 124, 20);
 		frmLogin.getContentPane().add(txtPassword);

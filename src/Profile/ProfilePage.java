@@ -53,24 +53,23 @@ public class ProfilePage extends JFrame{
 			Class.forName("com.mysql.jdbc.Driver");
 
             connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-            ps = connection.prepareStatement("SELECT * FROM `user` WHERE `user_name` = ? AND `password` = ?");
+            ps = connection.prepareStatement("SELECT * FROM `professor` WHERE `professorUserName` = ? AND `password` = ?");
             ps.setString(1, userName);
             ps.setString(2, String.valueOf(password));
             ResultSet result = ps.executeQuery();
             
             if(result.next()) {
-            name = result.getString("name");
-            title = result.getString("title");
-            //System.out.println(result.getString("name"));
+            name = result.getString("professorName");
             
-            ps = connection.prepareStatement("SELECT * FROM `courses` WHERE `user_id` = ?");
-            ps.setString(1, result.getString("user_id"));
+            ps = connection.prepareStatement("SELECT * FROM `module` WHERE `professorId` = ?");
+            ps.setString(1, result.getString("professorId"));
             
             }
             
             result = ps.executeQuery();
             while(result.next()) {
-            	lectures = lectures + ", " + result.getString("course_id");
+            	lectures = lectures + result.getString("moduleCode") + " - " + result.getString("moduleName") + "<br/>" + "&nbsp;&nbsp;&nbsp;"+ 
+            			"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" ;
             }
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,14 +129,9 @@ public class ProfilePage extends JFrame{
 		lblName.setBounds(172, 180, 250, 19);
 		frmProfile.getContentPane().add(lblName);
 		
-		JLabel lbltitle = new JLabel("Title :    " + title);
-		lbltitle.setForeground(Color.BLACK);
-		lbltitle.setBounds(172, 212, 250, 19);
-		frmProfile.getContentPane().add(lbltitle);
-		
-		JLabel lblLectures = new JLabel("Lecture(s) : " + lectures);
+		JLabel lblLectures = new JLabel("<html>Lecture(s) : " + lectures + "</html>");
 		lblLectures.setForeground(Color.BLACK);
-		lblLectures.setBounds(172, 242, 250, 19);
+		lblLectures.setBounds(172, 199, 400, 90);
 		frmProfile.getContentPane().add(lblLectures);
 		
 		/*JTextPane txtName = new JTextPane();

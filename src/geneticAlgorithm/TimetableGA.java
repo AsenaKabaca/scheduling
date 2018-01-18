@@ -36,8 +36,8 @@ import java.util.Arrays;
  *
  */
 public class TimetableGA {
+	public static void executeGA() {
 
-    public static void main(String[] args) {
     	// Get a Timetable object with all the available information.
         Timetable timetable = initializeTimetable();
         
@@ -79,6 +79,18 @@ public class TimetableGA {
         System.out.println("Final solution fitness: " + population.getFittest(0).getFitness());
         System.out.println("Clashes: " + timetable.calcClashes());
 
+        //clear schedule table
+        Connection connection;
+        PreparedStatement ps;
+        try {
+			java.lang.Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+            ps = connection.prepareStatement("TRUNCATE TABLE `schedule`");
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException ex) {
+        	ex.printStackTrace();
+        }
+        
         // Print classes
         System.out.println();
         Class classes[] = timetable.getClasses();
@@ -97,8 +109,31 @@ public class TimetableGA {
                     timetable.getProfessor(bestClass.getProfessorId()).getTimeslot(bestClass.getTimeslotId()).getTimeslot());
             //timeslot
             System.out.println("-----");
+            
+            //to fill schedule table in database
+            try {
+    			java.lang.Class.forName("com.mysql.jdbc.Driver");
+
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+                ps = connection.prepareStatement("INSERT INTO `schedule` VALUES (?, ?, ?, ?)");
+                ps.setInt(1, bestClass.getProfessorId());
+                ps.setInt(2, bestClass.getModuleId());
+                ps.setInt(3, bestClass.getRoomId());
+                ps.setInt(4, bestClass.getTimeslotId());
+                ps.executeUpdate();
+                
+            } catch (SQLException | ClassNotFoundException ex) {
+            	ex.printStackTrace();
+            }
+            
             classIndex++;
         }
+    
+		
+	}
+
+    public static void main(String[] args) {
+    	executeGA();
     }
 
     /**
