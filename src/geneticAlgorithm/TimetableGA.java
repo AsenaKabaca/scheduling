@@ -199,7 +199,7 @@ public class TimetableGA {
 			java.lang.Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
 	        
-	        ps = connection.prepareStatement("SELECT * FROM `avaible`");
+	        ps = connection.prepareStatement("SELECT * FROM `available`");
 	        ResultSet result1 = ps.executeQuery();
 	        while(result1.next()){
 	        	timetable.addProfessor(result1.getInt("id"), result1.getString("professorName"));

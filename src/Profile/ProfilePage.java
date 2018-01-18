@@ -25,7 +25,10 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 
 import Login.LoginPage;
+import Tables.GeneralTable;
 import Tables.PersonalTable;
+import Tables.Update;
+
 import javax.swing.JTextField;
 import java.awt.Panel;
 import java.awt.ScrollPane;
@@ -114,7 +117,10 @@ public class ProfilePage extends JFrame{
 		JButton btnNewButton_1 = new JButton("General Table");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				GeneralTable info = new GeneralTable();             
+				GeneralTable.main(null);
+                frmProfile.setVisible(false);
+                dispose();
 			}
 		});
 		btnNewButton_1.setBounds(10, 214, 129, 23);
@@ -152,6 +158,16 @@ public class ProfilePage extends JFrame{
 		frmProfile.getContentPane().add(progressBar);
 		
 		JButton btnNewButton_2 = new JButton("Update Table");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Update info = new Update(userName, password);           
+            	info.frmUpdate.setVisible(true);
+                frmProfile.setVisible(false);
+                dispose();
+			}
+		});
+
 		btnNewButton_2.setBounds(10, 248, 129, 23);
 		frmProfile.getContentPane().add(btnNewButton_2);
 	}
