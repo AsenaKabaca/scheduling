@@ -1,7 +1,5 @@
 package Profile;
 
-
-import java.awt.EventQueue;
 import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,25 +14,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JProgressBar;
 import java.awt.Color;
-import javax.swing.JTextPane;
 
 import Login.LoginPage;
-import Tables.GeneralTable;
-import Tables.PersonalTable;
+import Tables.CalendarProgram;
 import Tables.Update;
 
-import javax.swing.JTextField;
-import java.awt.Panel;
-import java.awt.ScrollPane;
-import java.awt.TextField;
-import java.awt.Button;
-import javax.swing.DropMode;
+
 
 
 public class ProfilePage extends JFrame{
@@ -42,8 +30,8 @@ public class ProfilePage extends JFrame{
 	public JFrame frmProfile;
 	private String userName = null;
 	private String password = null;
+	private int professorId;
 	private String name;
-	private String title;
 	private String lectures = "";
 
 	public ProfilePage(String username, String password) {
@@ -63,7 +51,7 @@ public class ProfilePage extends JFrame{
             
             if(result.next()) {
             name = result.getString("professorName");
-            
+            professorId = result.getInt("professorId");
             ps = connection.prepareStatement("SELECT * FROM `module` WHERE `professorId` = ?");
             ps.setString(1, result.getString("professorId"));
             
@@ -104,11 +92,8 @@ public class ProfilePage extends JFrame{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-            	PersonalTable info = new PersonalTable();             
-                PersonalTable.main(null);
-                frmProfile.setVisible(false);
-                dispose();
-
+            	CalendarProgram.personalTable(professorId);
+				//frmProfile.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			}
 		});
 		btnNewButton.setBounds(10, 180, 129, 23);
@@ -117,10 +102,14 @@ public class ProfilePage extends JFrame{
 		JButton btnNewButton_1 = new JButton("General Table");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GeneralTable info = new GeneralTable();             
+				
+				CalendarProgram.generalTable();
+				//frmProfile.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+				/*GeneralTable info = new GeneralTable();             
 				GeneralTable.main(null);
                 frmProfile.setVisible(false);
-                dispose();
+                dispose();*/
 			}
 		});
 		btnNewButton_1.setBounds(10, 214, 129, 23);

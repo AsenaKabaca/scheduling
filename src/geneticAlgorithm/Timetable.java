@@ -75,72 +75,33 @@ public class Timetable {
 		return this.professors;
 	}
 
-	/**
-	 * Add new room
-	 * 
-	 * @param roomId
-	 * @param roomName
-	 * @param capacity
-	 */
+	
+	 // Add new room
 	public void addRoom(int roomId, String roomName, int capacity) {
 		this.rooms.put(roomId, new Room(roomId, roomName, capacity));
 	}
 
-	/**
-	 * Add new professor
-	 * 
-	 * @param professorId
-	 * @param professorName
-	 */
+	
+	 // Add new professor
 	public void addProfessor(int professorId, String professorName) {
 		this.professors.put(professorId, new Professor(professorId, professorName));
 	}
 
-	/**
-	 * Add new module
-	 * 
-	 * @param moduleId
-	 * @param moduleCode
-	 * @param module
-	 * @param professorIds
-	 */
-	/*public void addModule(int moduleId, String moduleCode, String module, int professorIds[]) {
-		this.modules.put(moduleId, new Module(moduleId, moduleCode, module, professorIds));
-	}*/
-
-	//tek prof
+	// Add new module
 	public void addModule(int moduleId, String moduleCode, String module, int professorId) {
 		this.modules.put(moduleId, new Module(moduleId, moduleCode, module, professorId));
 	}
 
 	
-	/**
-	 * Add new group
-	 * 
-	 * @param groupId
-	 * @param groupSize
-	 * @param moduleIds
-	 */
+	//Add new group
 	public void addGroup(int groupId, int groupSize, int moduleIds[]) {
 		this.groups.put(groupId, new Group(groupId, groupSize, moduleIds));
 		this.numClasses = 0;
 	}
 
 
-	/**
-	 * Create classes using individual's chromosome
-	 * 
-	 * One of the two important methods in this class; given a chromosome,
-	 * unpack it and turn it into an array of Class (with a capital C) objects.
-	 * These Class objects will later be evaluated by the calcClashes method,
-	 * which will loop through the Classes and calculate the number of
-	 * conflicting timeslots, rooms, professors, etc.
-	 * 
-	 * While this method is important, it's not really difficult or confusing.
-	 * Just loop through the chromosome and create Class objects and store them.
-	 * 
-	 * @param individual
-	 */
+	//Create classes using individual's chromosome
+	 
 	public void createClasses(Individual individual) {
 		// Init classes
 		Class classes[] = new Class[this.getNumClasses()];
@@ -170,16 +131,10 @@ public class Timetable {
 				classIndex++;
 			}
 		}
-
 		this.classes = classes;
 	}
 
-	/**
-	 * Get room from roomId
-	 * 
-	 * @param roomId
-	 * @return room
-	 */
+	// Get room from roomId
 	public Room getRoom(int roomId) {
 		if (!this.rooms.containsKey(roomId)) {
 			System.out.println("Rooms doesn't contain key " + roomId);
@@ -191,53 +146,34 @@ public class Timetable {
 		return this.rooms;
 	}
 
-	/**
-	 * Get random room
-	 * 
-	 * @return room
-	 */
+	//Get random room
 	public Room getRandomRoom() {
 		Object[] roomsArray = this.rooms.values().toArray();
 		Room room = (Room) roomsArray[(int) (roomsArray.length * Math.random())];
 		return room;
 	}
 
-	/**
-	 * Get professor from professorId
-	 * 
-	 * @param professorId
-	 * @return professor
-	 */
+	//Get professor from professorId
 	public Professor getProfessor(int professorId) {
 		return (Professor) this.professors.get(professorId);
 	}
 
-	/**
-	 * Get random timeslotId
-	 * 
-	 * @return timeslot
-	 */
+	//Get random timeslotId
+	 
 	public Timeslot getRandomTimeslot(int professorID) {
 		Object[] timeslotArray = this.professors.get(professorID).getTimeslots().values().toArray();
 		Timeslot timeslot = (Timeslot) timeslotArray[(int) (timeslotArray.length * Math.random())];
 		return timeslot;
 	}
 	
-	/**
-	 * Get module from moduleId
-	 * 
-	 * @param moduleId
-	 * @return module
-	 */
+	//Get module from moduleId
+	 
 	public Module getModule(int moduleId) {
 		return (Module) this.modules.get(moduleId);
 	}
 	
-	/**
-	 * Check if module exists.
-	 * @param moduleId
-	 * @return
-	 */
+	// Check if module exists.
+	 
 	public boolean moduleExist(int moduleId) {
 		for(Map.Entry<Integer, Module> entry: this.modules.entrySet()) {
 			if(entry.getValue().getModuleId() == moduleId)
@@ -246,50 +182,33 @@ public class Timetable {
 		return false;
 	}
 
-	/**
-	 * Get moduleIds of student group
-	 * 
-	 * @param groupId
-	 * @return moduleId array
-	 */
+	//Get moduleIds of student group
+	 
 	public int[] getGroupModules(int groupId) {
 		Group group = (Group) this.groups.get(groupId);
 		return group.getModuleIds();
 	}
 
-	/**
-	 * Get group from groupId
-	 * 
-	 * @param groupId
-	 * @return group
-	 */
+	// Get group from groupId
+	 
 	public Group getGroup(int groupId) {
 		return (Group) this.groups.get(groupId);
 	}
 
-	/**
-	 * Get all student groups
-	 * 
-	 * @return array of groups
-	 */
+	//Get all student groups
+	 
 	public Group[] getGroupsAsArray() {
 		return (Group[]) this.groups.values().toArray(new Group[this.groups.size()]);
 	}
 
-	/**
-	 * Get classes
-	 * 
-	 * @return classes
-	 */
+	// Get classes
+	 
 	public Class[] getClasses() {
 		return this.classes;
 	}
 
-	/**
-	 * Get number of classes that need scheduling
-	 * 
-	 * @return numClasses
-	 */
+	// Get number of classes that need scheduling
+	 
 	public int getNumClasses() {
 		if (this.numClasses > 0) {
 			return this.numClasses;
@@ -305,28 +224,10 @@ public class Timetable {
 		return this.numClasses;
 	}
 
-	/**
-	 * Calculate the number of clashes between Classes generated by a
-	 * chromosome.
-	 * 
-	 * The most important method in this class; look at a candidate timetable
-	 * and figure out how many constraints are violated.
-	 * 
-	 * Running this method requires that createClasses has been run first (in
-	 * order to populate this.classes). The return value of this method is
-	 * simply the number of constraint violations (conflicting professors,
-	 * timeslots, or rooms), and that return value is used by the
-	 * GeneticAlgorithm.calcFitness method.
-	 * 
-	 * There's nothing too difficult here either -- loop through this.classes,
-	 * and check constraints against the rest of the this.classes.
-	 * 
-	 * The two inner `for` loops can be combined here as an optimization, but
-	 * kept separate for clarity. For small values of this.classes.length it
-	 * doesn't make a difference, but for larger values it certainly does.
-	 * 
-	 * @return numClashes
-	 */
+	
+	 //Calculate the number of clashes between Classes generated by a
+	 // chromosome.
+	 
 	public int calcClashes() {
 		int clashes = 0;
 
@@ -347,7 +248,6 @@ public class Timetable {
 					break;
 				}
 			}
-
 			// Check if professor is available
 			for (Class classB : this.classes) {
 				if (classA.getProfessorId() == classB.getProfessorId() && classA.getTimeslotId() == classB.getTimeslotId()
@@ -355,8 +255,7 @@ public class Timetable {
 					clashes++;
 					break;
 				}
-			}
-			
+			}			
 			// Check if group is available /we added it/
 			for(Class classB: this.classes) {
 				if (classA.getGroupId() == classB.getGroupId() && classA.getTimeslotId() == classB.getTimeslotId()
@@ -366,12 +265,11 @@ public class Timetable {
 				}
 			}
 		}
-
 		return clashes;
 	}
-	/**
-	 * deletes professors who has not free time
-	 */
+	
+	//deletes professors who has not free time
+	 
 	public void delNonFreeProfs() {
 		for(Map.Entry<Integer, Professor> entry: this.professors.entrySet()) {
 			if(entry.getValue().getTimeslots().isEmpty()) {

@@ -3,7 +3,7 @@ package geneticAlgorithm;
 
 public class GeneticAlgorithm {
 
-	private int populationSize;
+	private int populationSize; 
 	private double mutationRate;
 	private double crossoverRate;
 	private int elitismCount;
@@ -19,49 +19,25 @@ public class GeneticAlgorithm {
 		this.tournamentSize = tournamentSize;
 	}
 
-	/**
-	 * Initialize population
-	 * 
-	 * @param chromosomeLength
-	 *            The length of the individuals chromosome
-	 * @return population The initial population generated
-	 */
+	// Initialize population	
 	public Population initPopulation(Timetable timetable) {
 		// Initialize population
 		Population population = new Population(this.populationSize, timetable);
 		return population;
 	}
 
-	/**
-	 * Check if population has met termination condition
-	 * 
-	 * @param generationsCount
-	 *            Number of generations passed
-	 * @param maxGenerations
-	 *            Number of generations to terminate after
-	 * @return boolean True if termination condition met, otherwise, false
-	 */
+	//Check if population has met termination condition	 
 	public boolean isTerminationConditionMet(int generationsCount, int maxGenerations) {
 		return (generationsCount > maxGenerations);
 	}
 
-	/**
-	 * Check if population has met termination condition
-	 *
-	 * @param population
-	 * @return boolean True if termination condition met, otherwise, false
-	 */
+	// Check if population has met termination condition	 
 	public boolean isTerminationConditionMet(Population population) {
 		return population.getFittest(0).getFitness() == 1.0;
 	}
 
-	/**
-	 * Calculate individual's fitness value
-	 * 
-	 * @param individual
-	 * @param timetable
-	 * @return fitness
-	 */
+	//Calculate individual's fitness value
+	//return fitness	 
 	public double calcFitness(Individual individual, Timetable timetable) {
 
 		// Create new timetable object to use -- cloned from an existing timetable
@@ -77,12 +53,7 @@ public class GeneticAlgorithm {
 		return fitness;
 	}
 
-	/**
-	 * Evaluate population
-	 * 
-	 * @param population
-	 * @param timetable
-	 */
+	// Evaluate population	 
 	public void evalPopulation(Population population, Timetable timetable) {
 		double populationFitness = 0;
 
@@ -95,15 +66,10 @@ public class GeneticAlgorithm {
 		population.setPopulationFitness(populationFitness);
 	}
 
-	/**
-	 * Selects parent for crossover using tournament selection
-	 * 
-	 * Tournament selection works by choosing N random individuals, and then
-	 * choosing the best of those.
-	 * 
-	 * @param population
-	 * @return The individual selected as a parent
-	 */
+	 //Selects parent for crossover using tournament selection
+	 //Tournament selection works by choosing N random individuals, and then
+	 // choosing the best of those.
+	 
 	public Individual selectParent(Population population) {
 		// Create tournament
 		Population tournament = new Population(this.tournamentSize);
@@ -120,13 +86,7 @@ public class GeneticAlgorithm {
 	}
 
 
-	/**
-     * Apply mutation to population
-     * 
-     * @param population
-     * @param timetable
-     * @return The mutated population
-     */
+	//Apply mutation to population    
 	public Population mutatePopulation(Population population, Timetable timetable) {
 		// Initialize new population
 		Population newPopulation = new Population(this.populationSize);
@@ -149,7 +109,6 @@ public class GeneticAlgorithm {
 					}
 				}
 			}
-
 			// Add individual to population
 			newPopulation.setIndividual(populationIndex, individual);
 		}
@@ -158,12 +117,8 @@ public class GeneticAlgorithm {
 		return newPopulation;
 	}
 
-    /**
-     * Apply crossover to population
-     * 
-     * @param population The population to apply crossover to
-     * @return The new population
-     */
+    //Apply crossover to population
+     
 	public Population crossoverPopulation(Population population) {
 		// Create new population
 		Population newPopulation = new Population(population.size());
@@ -197,10 +152,6 @@ public class GeneticAlgorithm {
 				newPopulation.setIndividual(populationIndex, parent1);
 			}
 		}
-
 		return newPopulation;
 	}
-
-
-
 }

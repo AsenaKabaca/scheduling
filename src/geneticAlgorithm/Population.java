@@ -18,12 +18,8 @@ public class Population {
 		this.population = new Individual[populationSize];
 	}
 	
-	/**
-     * Initializes population of individuals
-     * 
-     * @param populationSize The size of the population
-     * @param timetable The timetable information
-     */
+	//Initializes population of individuals
+    
 	public Population(int populationSize, Timetable timetable) {
 		// Initial population
 		this.population = new Individual[populationSize];
@@ -38,15 +34,10 @@ public class Population {
 	}
 
 
-	/**
-	 * Initializes population of individuals
-	 * 
-	 * @param populationSize
-	 *            The size of the population
-	 * @param chromosomeLength
-	 *            The length of the individuals chromosome
-	 */
+	//Initializes population of individuals
+	 
 	public Population(int populationSize, int chromosomeLength) {
+		
 		// Initial population
 		this.population = new Individual[populationSize];
 
@@ -59,21 +50,15 @@ public class Population {
 		}
 	}
 
-	/**
-	 * Get individuals from the population
-	 * 
-	 * @return individuals Individuals in population
-	 */
+	// Get individuals from the population
+	 
 	public Individual[] getIndividuals() {
 		return this.population;
 	}
 
-	/**
-	 * Find fittest individual in the population
-	 * 
-	 * @param offset
-	 * @return individual Fittest individual at offset
-	 */
+	// Find fittest individual in the population
+	//return individual Fittest individual at offset
+	 
 	public Individual getFittest(int offset) {
 		// Order population by fitness
 		Arrays.sort(this.population, new Comparator<Individual>() {

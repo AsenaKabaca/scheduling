@@ -24,6 +24,7 @@ import java.sql.*;
 
 import Login.LoginPage;
 import Profile.ProfilePage;
+import geneticAlgorithm.TimetableGA;
 
 import java.awt.Font;
 import java.awt.FlowLayout;
@@ -45,6 +46,7 @@ public class Update extends JFrame{
 	private String userName = null;
 	private String name;
 	private String password = null;
+	private int professorId;
 	private final Action action = new SwingAction();
 
 	public Update(String userName, String password) {
@@ -61,7 +63,7 @@ public class Update extends JFrame{
             ResultSet result = ps.executeQuery();
             if(result.next()) {
             name = result.getString("professorName");
-           
+            professorId = result.getInt("professorId");
 
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -132,14 +134,18 @@ public class Update extends JFrame{
 		lblImageLabel.setIcon(new ImageIcon(scaledImage));
 		frmUpdate.getContentPane().add(lblImageLabel);
 		
-		JButton btnUpdate = new JButton("Update Table");
+		JButton btnUpdate = new JButton("Profile Page");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ProfilePage info = new ProfilePage(userName, password);             
+            	info.frmProfile.setVisible(true);
+                frmUpdate.setVisible(false);
+                dispose();
 			}
 		});
 		btnUpdate.setBounds(25, 170, 120, 25);
-		btnUpdate.setBackground(SystemColor.activeCaption);
-		btnUpdate.setForeground(SystemColor.desktop);
+		btnUpdate.setBackground(UIManager.getColor("Button.disabledShadow"));
+		//btnUpdate.setForeground(SystemColor.desktop);
 		frmUpdate.getContentPane().add(btnUpdate);
 		
 		JLabel lblName = new JLabel("Name : " + name);
@@ -152,6 +158,7 @@ public class Update extends JFrame{
 		btnGeneral.setBackground(UIManager.getColor("Button.disabledShadow"));
 		btnGeneral.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				CalendarProgram.generalTable();
 			}
 		});
 		frmUpdate.getContentPane().add(btnGeneral);
@@ -159,6 +166,11 @@ public class Update extends JFrame{
 		JButton btnPersonal = new JButton("Personal Table");
 		btnPersonal.setBounds(25, 205, 120, 25);
 		btnPersonal.setBackground(UIManager.getColor("Button.disabledShadow"));
+		btnPersonal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CalendarProgram.personalTable(professorId);
+			}
+		});
 		frmUpdate.getContentPane().add(btnPersonal);
 				
 		
@@ -831,7 +843,7 @@ public class Update extends JFrame{
 						e.printStackTrace();
 					}
 			  }
-				
+				TimetableGA.executeGA();
             	ProfilePage info = new ProfilePage(userName, password);             
             	info.frmProfile.setVisible(true);
                 frmUpdate.setVisible(false);
