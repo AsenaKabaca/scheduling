@@ -256,9 +256,17 @@ public class Timetable {
 					break;
 				}
 			}			
-			// Check if group is available /we added it/
+			// Check if group is available
 			for(Class classB: this.classes) {
 				if (classA.getGroupId() == classB.getGroupId() && classA.getTimeslotId() == classB.getTimeslotId()
+						&& classA.getClassId() != classB.getClassId()) {
+					clashes++;
+					break;
+				}
+			}
+			// Check if group is available
+			for(Class classB: this.classes) {
+				if (((classA.getGroupId()-classB.getGroupId() == 10) || (classA.getGroupId()-classB.getGroupId() == -10)) && classA.getTimeslotId() == classB.getTimeslotId()
 						&& classA.getClassId() != classB.getClassId()) {
 					clashes++;
 					break;
