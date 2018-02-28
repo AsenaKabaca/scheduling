@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -222,22 +223,31 @@ public class Update extends JFrame{
 		textMonday.setBackground(SystemColor.controlHighlight);
 		Monday.add(textMonday);
         
-		JCheckBox M9_11 = new JCheckBox("");
-		M9_11.setAction(action);
-		M9_11.setBounds(24, 30, 21, 21);
-		M9_11.setVerticalAlignment(SwingConstants.BOTTOM);
-		Monday.add(M9_11);
-
-		JCheckBox M13_15 = new JCheckBox("");
-		M13_15.setBounds(24, 55, 21, 21);
-		M13_15.setVerticalAlignment(SwingConstants.BOTTOM);
-		Monday.add(M13_15);
-
-				
-		JCheckBox M15_17 = new JCheckBox("");
-		M15_17.setBounds(24, 80, 21, 21);
-		M15_17.setVerticalAlignment(SwingConstants.BOTTOM);
-		Monday.add(M15_17);	
+		HashMap<String, JCheckBox> checkBoxes = new  HashMap<String, JCheckBox>();
+		
+		Connection connection;
+		PreparedStatement ps;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+			ps = connection.prepareStatement("SELECT `timeslot` FROM `timeslot` WHERE `timeslotId` < 4");
+			ResultSet result = ps.executeQuery();
+			int i = 0;
+			while(result.next()) {
+				JCheckBox tmp = new JCheckBox("");
+				tmp.setBounds(24, 30+(i*25), 21, 21);
+				tmp.setVerticalAlignment(SwingConstants.BOTTOM);
+				checkBoxes.put(result.getString("timeslot"), tmp);
+				Monday.add(checkBoxes.get(result.getString("timeslot")));
+				i++;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		JPanel Tuesday = new JPanel();
 		Tuesday.setLayout(null);
@@ -250,22 +260,29 @@ public class Update extends JFrame{
 		textTuesday.setBounds(0, 0, 80, 25);
 		Tuesday.add(textTuesday);
 		
-		JCheckBox Tue9_11 = new JCheckBox("");
-		Tue9_11.setVerticalAlignment(SwingConstants.BOTTOM);
-		Tue9_11.setBounds(24, 30, 21, 21);
-		Tuesday.add(Tue9_11);
-
-		
-		JCheckBox Tue13_15 = new JCheckBox("");
-		Tue13_15.setVerticalAlignment(SwingConstants.BOTTOM);
-		Tue13_15.setBounds(24, 55, 21, 21);
-		Tuesday.add(Tue13_15);
-
-		
-		JCheckBox Tue15_17 = new JCheckBox("");
-		Tue15_17.setVerticalAlignment(SwingConstants.BOTTOM);
-		Tue15_17.setBounds(24, 80, 21, 21);
-		Tuesday.add(Tue15_17);
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+			ps = connection.prepareStatement("SELECT `timeslot` FROM `timeslot` WHERE `timeslotId` < 7 AND `timeslotId` > 3");
+			ResultSet result = ps.executeQuery();
+			int i = 0;
+			while(result.next()) {
+				JCheckBox tmp = new JCheckBox("");
+				if(i == 0)
+					tmp.setAction(action);
+				tmp.setBounds(24, 30+(i*25), 21, 21);
+				tmp.setVerticalAlignment(SwingConstants.BOTTOM);
+				checkBoxes.put(result.getString("timeslot"), tmp);
+				Tuesday.add(checkBoxes.get(result.getString("timeslot")));
+				i++;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		JPanel Wednesday = new JPanel();
 		Wednesday.setLayout(null);
@@ -278,21 +295,28 @@ public class Update extends JFrame{
 		textWednesday.setBounds(0, 0, 80, 25);
 		Wednesday.add(textWednesday);
 
-		JCheckBox W9_11 = new JCheckBox("");
-		W9_11.setVerticalAlignment(SwingConstants.BOTTOM);
-		W9_11.setBounds(24, 30, 21, 21);
-		Wednesday.add(W9_11);
-		
-		JCheckBox W13_15 = new JCheckBox("");
-		W13_15.setVerticalAlignment(SwingConstants.BOTTOM);
-		W13_15.setBounds(24, 55, 21, 21);
-		Wednesday.add(W13_15);
-		
-		JCheckBox W15_17 = new JCheckBox("");
-		W15_17.setVerticalAlignment(SwingConstants.BOTTOM);
-		W15_17.setBounds(24, 80, 21, 21);
-		Wednesday.add(W15_17);
-		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+			ps = connection.prepareStatement("SELECT `timeslot` FROM `timeslot` WHERE `timeslotId` < 10 AND `timeslotId` > 6");
+			ResultSet result = ps.executeQuery();
+			int i = 0;
+			while(result.next()) {
+				JCheckBox tmp = new JCheckBox("");
+				tmp.setBounds(24, 30+(i*25), 21, 21);
+				tmp.setVerticalAlignment(SwingConstants.BOTTOM);
+				checkBoxes.put(result.getString("timeslot"), tmp);
+				Wednesday.add(checkBoxes.get(result.getString("timeslot")));
+				i++;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		JPanel Thursday = new JPanel();
 		Thursday.setLayout(null);
 		Thursday.setBounds(540, 75, 80, 200);
@@ -303,22 +327,29 @@ public class Update extends JFrame{
 		textThursday.setBackground(SystemColor.controlHighlight);
 		textThursday.setBounds(0, 0, 80, 25);
 		Thursday.add(textThursday);
-	
-		JCheckBox T9_11 = new JCheckBox("");
-		T9_11.setVerticalAlignment(SwingConstants.BOTTOM);
-		T9_11.setBounds(24, 30, 21, 21);
-		Thursday.add(T9_11);		
 		
-		JCheckBox T13_15 = new JCheckBox("");
-		T13_15.setVerticalAlignment(SwingConstants.BOTTOM);
-		T13_15.setBounds(24, 55, 21, 21);
-		Thursday.add(T13_15);
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+			ps = connection.prepareStatement("SELECT `timeslot` FROM `timeslot` WHERE `timeslotId` < 13 AND `timeslotId` > 9");
+			ResultSet result = ps.executeQuery();
+			int i = 0;
+			while(result.next()) {
+				JCheckBox tmp = new JCheckBox("");
+				tmp.setBounds(24, 30+(i*25), 21, 21);
+				tmp.setVerticalAlignment(SwingConstants.BOTTOM);
+				checkBoxes.put(result.getString("timeslot"), tmp);
+				Thursday.add(checkBoxes.get(result.getString("timeslot")));
+				i++;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
-		JCheckBox T15_17 = new JCheckBox("");
-		T15_17.setVerticalAlignment(SwingConstants.BOTTOM);
-		T15_17.setBounds(24, 80, 21, 21);
-		Thursday.add(T15_17);
-
 		JPanel Friday = new JPanel();
 		Friday.setLayout(null);
 		Friday.setBounds(620, 75, 80, 200);
@@ -330,519 +361,79 @@ public class Update extends JFrame{
 		textFriday.setBounds(0, 0, 80, 25);
 		Friday.add(textFriday);
 	
-		JCheckBox F9_11 = new JCheckBox("");
-		F9_11.setVerticalAlignment(SwingConstants.BOTTOM);
-		F9_11.setBounds(24, 30, 21, 21);
-		Friday.add(F9_11);
-		
-		JCheckBox F13_15 = new JCheckBox("");
-		F13_15.setVerticalAlignment(SwingConstants.BOTTOM);
-		F13_15.setBounds(24, 55, 21, 21);
-		Friday.add(F13_15);
-		
-		JCheckBox F15_17 = new JCheckBox("");
-		F15_17.setVerticalAlignment(SwingConstants.BOTTOM);
-		F15_17.setBounds(24, 80, 21, 21);
-		Friday.add(F15_17);
-		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+			ps = connection.prepareStatement("SELECT `timeslot` FROM `timeslot` WHERE `timeslotId` < 16 AND `timeslotId` > 12");
+			ResultSet result = ps.executeQuery();
+			int i = 0;
+			while(result.next()) {
+				JCheckBox tmp = new JCheckBox("");
+				tmp.setBounds(24, 30+(i*25), 21, 21);
+				tmp.setVerticalAlignment(SwingConstants.BOTTOM);
+				checkBoxes.put(result.getString("timeslot"), tmp);
+				Friday.add(checkBoxes.get(result.getString("timeslot")));
+				i++;
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				Connection connection;
 		        PreparedStatement ps;
-		        if (M9_11.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET M9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
+		        try {
+					Class.forName("com.mysql.jdbc.Driver");			
+					connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+					ps = connection.prepareStatement("SELECT `timeslot` FROM `timeslot`");
+					ResultSet result = ps.executeQuery();
+					while(result.next()) {
+						if(checkBoxes.get(result.getString("timeslot")).isSelected()) {
+							try {
+								Class.forName("com.mysql.jdbc.Driver");			
+								connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+								String pss = "UPDATE `available` SET " + result.getString("timeslot") + " = ? WHERE `professorName` = ?";
+								ps = connection.prepareStatement(pss);
+								ps.setString(1, "1");
+								ps.setString(2, name);
+								ps.executeUpdate();
+										
+							} catch (ClassNotFoundException e) {			
+								e.printStackTrace();
+							} catch (SQLException e) {	
+								e.printStackTrace();
+							}
+				        			
+						} else {
+							 try {
+								Class.forName("com.mysql.jdbc.Driver");			
+								connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
+								String pss = "UPDATE `available` SET " + result.getString("timeslot") + " = ? WHERE `professorName` = ?";
+								ps = connection.prepareStatement(pss);
+								ps.setString(1, "0");
+								ps.setString(2, name);
+								ps.executeUpdate();
+										
+							} catch (ClassNotFoundException e) {			
+								e.printStackTrace();
+							} catch (SQLException e) {	
+								e.printStackTrace();
+							}
+						}
 					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET M9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (M13_15.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET M13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET M13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (M15_17.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET M15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET M15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (Tue9_11.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET Tue9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET Tue9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (Tue13_15.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET Tue13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET Tue13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (Tue15_17.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET Tue15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET Tue15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (W9_11.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET W9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET W9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (W13_15.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET W13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET W13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (W15_17.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET W15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET W15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (T9_11.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET T9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET T9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (T13_15.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET T13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET T13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (T15_17.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET T15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET T15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (F9_11.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET F9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET F9_11 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (F13_15.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET F13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET F13_15 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-
-			        
-			  }
-		        if (F15_17.isSelected()) {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET F15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "1");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-		        			
-			  }
-			  else {
-			        try {
-						Class.forName("com.mysql.jdbc.Driver");			
-						connection = DriverManager.getConnection("jdbc:mysql://localhost/finalproject", "root", "");
-						ps = connection.prepareStatement("UPDATE available SET F15_17 = ? WHERE `professorName` = ?");
-						ps.setString(1, "0");
-						ps.setString(2, name);
-						ps.executeUpdate();
-								
-					} catch (ClassNotFoundException e) {			
-						e.printStackTrace();
-					} catch (SQLException e) {	
-						e.printStackTrace();
-					}
-			  }
+							
+				} catch (ClassNotFoundException e) {			
+					e.printStackTrace();
+				} catch (SQLException e) {	
+					e.printStackTrace();
+				}
+		      
 				TimetableGA.executeGA();
             	ProfilePage info = new ProfilePage(userName, password);             
             	info.frmProfile.setVisible(true);
